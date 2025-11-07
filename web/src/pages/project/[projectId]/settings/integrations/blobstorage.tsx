@@ -345,8 +345,8 @@ const BlobStorageIntegrationSettingsForm = ({
           />
         )}
 
-        {/* Region field - Only shown for AWS S3 */}
-        {integrationType === "S3" && (
+        {/* Region field - Only shown for AWS S3 or compatible storage */}
+        {integrationType !== "AZURE_BLOB_STORAGE" && (
           <FormField
             control={blobStorageForm.control}
             name="region"
@@ -356,7 +356,11 @@ const BlobStorageIntegrationSettingsForm = ({
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
-                <FormDescription>AWS region (e.g., us-east-1)</FormDescription>
+                <FormDescription>
+                  {integrationType === "S3"
+                    ? "AWS region (e.g., us-east-1)"
+                    : "S3 compatible storage region"}
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
